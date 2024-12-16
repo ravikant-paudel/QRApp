@@ -157,7 +157,7 @@ class DetectorView : View {
 		return when (event.actionMasked) {
 			MotionEvent.ACTION_DOWN -> {
 //				prefs.showCropHandle
-				if (false) {
+				if (true) {
 					touchDown.set(x, y)
 					handleGrabbed = abs(x - handlePos.x) < handleXRadius &&
 							abs(y - handlePos.y) < handleYRadius

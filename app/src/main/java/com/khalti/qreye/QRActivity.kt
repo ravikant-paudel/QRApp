@@ -457,8 +457,8 @@ class QRActivity : AppCompatActivity() {
 //                    tryHarder = prefs.tryHarder,
 //                    tryRotate = prefs.autoRotate,
 
-                    tryHarder = false,
-                    tryRotate = false,
+                    tryHarder = true,
+                    tryRotate = true,
                     tryInvert = true,
                     tryDownscale = true,
                     returnCodabarStartEnd = true,
