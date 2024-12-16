@@ -1,6 +1,6 @@
 package com.khalti.qreye
 
-import android.app.Activity
+//import  com.khalti.qreye.app.prefs
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -43,7 +43,7 @@ class QRActivity : AppCompatActivity() {
 
     private lateinit var cameraView: CameraView
     private lateinit var detectorView: DetectorView
-    private lateinit var zoomBar: SeekBar
+//    private lateinit var zoomBar: SeekBar
 //    private lateinit var flashFab: FloatingActionButton
 
     private var formatsToRead = setOf<BarcodeFormat>()
@@ -108,11 +108,11 @@ class QRActivity : AppCompatActivity() {
 
         cameraView = findViewById(R.id.camera_view) as CameraView
         detectorView = findViewById(R.id.detector_view) as DetectorView
-        zoomBar = findViewById(R.id.zoom) as SeekBar
+//        zoomBar = findViewById(R.id.zoom) as SeekBar
 //        flashFab = findViewById(R.id.flash) as FloatingActionButton
 
         initCameraView()
-        initZoomBar()
+//        initZoomBar()
         initDetectorView()
 
         if (intent?.action == Intent.ACTION_SEND &&
@@ -200,16 +200,16 @@ class QRActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedState: Bundle) {
         super.onRestoreInstanceState(savedState)
-        zoomBar.max = savedState.getInt(ZOOM_MAX)
-        zoomBar.progress = savedState.getInt(ZOOM_LEVEL)
+//        zoomBar.max = savedState.getInt(ZOOM_MAX)
+//        zoomBar.progress = savedState.getInt(ZOOM_LEVEL)
         frontFacing = savedState.getBoolean(FRONT_FACING)
 //        bulkMode = savedState.getBoolean(BULK_MODE)
         restrictFormat = savedState.getString(RESTRICT_FORMAT)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putInt(ZOOM_MAX, zoomBar.max)
-        outState.putInt(ZOOM_LEVEL, zoomBar.progress)
+//        outState.putInt(ZOOM_MAX, zoomBar.max)
+//        outState.putInt(ZOOM_LEVEL, zoomBar.progress)
         outState.putBoolean(FRONT_FACING, frontFacing)
 //        outState.putBoolean(BULK_MODE, bulkMode)
         outState.putString(RESTRICT_FORMAT, restrictFormat)
@@ -374,21 +374,21 @@ class QRActivity : AppCompatActivity() {
                 when (event.actionMasked) {
                     MotionEvent.ACTION_DOWN -> {
                         offset = pos
-                        progress = zoomBar.progress
+//                        progress = zoomBar.progress
                         return true
                     }
 
                     MotionEvent.ACTION_MOVE -> {
 //                        if (prefs.zoomBySwiping) {
-                            v ?: return false
-                            val dist = offset - pos
-                            val maxValue = zoomBar.max
-                            val change = maxValue / v.height.toFloat() * 2f * dist
-                            zoomBar.progress = min(
-                                maxValue,
-                                max(progress + change.roundToInt(), 0)
-                            )
-                            return true
+                        v ?: return false
+                        val dist = offset - pos
+//                            val maxValue = zoomBar.max
+//                            val change = maxValue / v.height.toFloat() * 2f * dist
+//                            zoomBar.progress = min(
+//                                maxValue,
+//                                max(progress + change.roundToInt(), 0)
+//                            )
+                        return true
 //                        }
                     }
 
@@ -413,18 +413,18 @@ class QRActivity : AppCompatActivity() {
                 parameters: Camera.Parameters
             ) {
                 print("QRAPP ---> onConfigureParameters")
-                zoomBar.visibility = if (parameters.isZoomSupported) {
-                    val max = parameters.maxZoom
-                    if (zoomBar.max != max) {
-                        zoomBar.max = max
-                        zoomBar.progress = max / 10
-//                        saveZoom()
-                    }
-                    parameters.zoom = zoomBar.progress
-                    View.VISIBLE
-                } else {
-                    View.GONE
-                }
+//                zoomBar.visibility = if (parameters.isZoomSupported) {
+//                    val max = parameters.maxZoom
+//                    if (zoomBar.max != max) {
+//                        zoomBar.max = max
+//                        zoomBar.progress = max / 10
+////                        saveZoom()
+//                    }
+//                    parameters.zoom = zoomBar.progress
+//                    View.VISIBLE
+//                } else {
+//                    View.GONE
+//                }
                 val sceneModes = parameters.supportedSceneModes
                 sceneModes?.let {
                     for (mode in sceneModes) {
@@ -508,23 +508,23 @@ class QRActivity : AppCompatActivity() {
         })
     }
 
-    private fun initZoomBar() {
-        zoomBar.setOnSeekBarChangeListener(object :
-            SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(
-                seekBar: SeekBar,
-                progress: Int,
-                fromUser: Boolean
-            ) {
-                cameraView.camera?.setZoom(progress)
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {}
-
-            override fun onStopTrackingTouch(seekBar: SeekBar) {}
-        })
-//        restoreZoom()
-    }
+//    private fun initZoomBar() {
+//        zoomBar.setOnSeekBarChangeListener(object :
+//            SeekBar.OnSeekBarChangeListener {
+//            override fun onProgressChanged(
+//                seekBar: SeekBar,
+//                progress: Int,
+//                fromUser: Boolean
+//            ) {
+//                cameraView.camera?.setZoom(progress)
+//            }
+//
+//            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+//
+//            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+//        })
+////        restoreZoom()
+//    }
 
     @Suppress("DEPRECATION")
     private fun Camera.setZoom(zoom: Int) {
@@ -670,9 +670,9 @@ class QRActivity : AppCompatActivity() {
     }
 }
 
-fun Set<String>.toFormatSet(): Set<BarcodeFormat> = map {
-    BarcodeFormat.valueOf(it)
-}.toSet()
+//fun Set<String>.toFormatSet(): Set<BarcodeFormat> = map {
+//    BarcodeFormat.valueOf(it)
+//}.toSet()
 
 //fun Activity.showResult(
 //    result: Result,
@@ -737,15 +737,15 @@ fun Set<String>.toFormatSet(): Set<BarcodeFormat> = map {
 //    }
 //}
 
-private fun getReturnIntent(result: Result) = Intent().apply {
-    putExtra("SCAN_RESULT", result.text)
-    putExtra("SCAN_RESULT_FORMAT", result.format.toString())
-    putExtra("SCAN_RESULT_ORIENTATION", result.orientation)
-    putExtra("SCAN_RESULT_ERROR_CORRECTION_LEVEL", result.ecLevel)
-    if (result.rawBytes.isNotEmpty()) {
-        putExtra("SCAN_RESULT_BYTES", result.rawBytes)
-    }
-}
+//private fun getReturnIntent(result: Result) = Intent().apply {
+//    putExtra("SCAN_RESULT", result.text)
+//    putExtra("SCAN_RESULT_FORMAT", result.format.toString())
+//    putExtra("SCAN_RESULT_ORIENTATION", result.orientation)
+//    putExtra("SCAN_RESULT_ERROR_CORRECTION_LEVEL", result.ecLevel)
+//    if (result.rawBytes.isNotEmpty()) {
+//        putExtra("SCAN_RESULT_BYTES", result.rawBytes)
+//    }
+//}
 
 private fun String.isReturnUrl() = listOf(
     "binaryeye://scan",

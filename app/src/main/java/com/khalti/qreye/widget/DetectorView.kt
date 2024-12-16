@@ -276,7 +276,7 @@ class DetectorView : View {
 		}
 		canvas.drawDots()
 //		if (prefs.showCropHandle) {
-			canvas.drawHandle()
+//			canvas.drawHandle()
 //		}
 	}
 
