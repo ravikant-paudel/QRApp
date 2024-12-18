@@ -1,7 +1,7 @@
 package com.khalti.qreye.app
 
 import android.app.Application
-import com.khalti.qreye.preference.Preferences
+//import com.khalti.qreye.preference.Preferences
 
 //val db = Database()
 //val prefs = Preferences()
